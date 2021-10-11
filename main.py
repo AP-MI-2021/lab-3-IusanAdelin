@@ -13,6 +13,7 @@ def get_longest_subsequence(lst: list[int], has_property: Callable) -> list[int]
     returned_subsequence = []
     max_length = 0
 
+
     for i in range(len(lst)):
         for j in range(i, len(lst)):
             current_subsequence = lst[i:j+1]
@@ -101,6 +102,43 @@ def test_get_longest_equal_int_real():
 
 test_get_longest_equal_int_real()
 
+def are_even(lst: list[int]) -> bool:
+    """
+    Verifica daca toate numerele unei liste sunt pare
+    Args: lst:list[int]: Lista verificata
+    Return: bool: True daca toate numerele sunt par sau False in caz contrar
+    """
+
+    for x in lst:
+        if x % 2 == 1:
+            return False
+    return True
+
+def test_are_even():
+    assert are_even([2,4,6,8]) == True
+    assert are_even([]) == True
+    assert are_even([1,2,3,4]) == False
+    assert are_even([1]) == False
+
+test_are_even()
+
+def get_longest_all_even(lst: list[int]) -> list[int]:
+    """
+    Returneaza cea mai lunga subsecventa in care toate numerele sunt pare
+    :param lst: Lista verificata
+    :return: Subsecventa cu numerele pare
+    """
+
+    return get_longest_subsequence(lst,are_even)
+
+def test_get_longest_all_even():
+    assert get_longest_all_even([1,2,3,4,6,8,9,10]) == [4,6,8]
+    assert get_longest_all_even([1,3,5,8]) == [8]
+    assert get_longest_all_even([]) == []
+    assert get_longest_all_even([1,5,13]) == []
+
+test_get_longest_all_even()
+
 
 def list_input():
     print("Introdu elementele listei separate printr-o virgula")
@@ -122,7 +160,8 @@ def main():
             1. Citire date
             2. Determinare cea mai lunga subsecventa din lista a numerelor ordonate crescator
             3. Determinare cea mai lunga subsecventa din lista a numerelor a caror parte intreaga este egala cu partea fractionara
-            4. Iesire
+            4. Determinare cea mai lunga subsecventa din lista a numerelor pare
+            5. Iesire
             """)
         option = input("Optiune meniu:")
 
@@ -135,6 +174,9 @@ def main():
             data = get_longest_equal_int_real(data)
             print(f"Cea mai lunga subsecventa din lista a numerelor a caror parte intreaga este egala cu partea fractionara e {data}")
         elif option == '4':
+            data = get_longest_all_even(data)
+            print(f"Cea mai lunga subsecventa din lista a numerelor pare e {data}")
+        elif option == '5':
             shouldRun=False
 
 if __name__ == "__main__":
